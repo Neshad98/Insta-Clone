@@ -19,7 +19,7 @@ const useSignUpWithEmailAndPassword = () => {
     try {
       const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password)
       if (!newUser && error) {
-        showToast("Error", error.errors.message, "error");
+        showToast("Error", error.message, "error");
         return;
       }
       if (newUser) {
@@ -40,7 +40,12 @@ const useSignUpWithEmailAndPassword = () => {
       }
     }
     catch (error) {
-      showToast("Error", error.message, "error")
+      if (error.message === "auth/email-already-in-use") {
+        showToast("Error", "This email is already in use. Please use a different email", "error");
+      } else {
+        showToast("Error", error.message, "error")
+      }
+
     }
   };
 

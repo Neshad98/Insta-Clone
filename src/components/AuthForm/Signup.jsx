@@ -57,17 +57,16 @@ const Signup = () => {
         </InputRightElement>
       </InputGroup>
 
-      {/* copy */}
+      {console.log("Error", error)}
       {error && (
         <Alert status='error' fontSize={13} p={2} borderRadius={4}>
           <AlertIcon fontSize={12} />
           {error.message}
-          {console.log(error.message)}
+
         </Alert>
       )}
 
-      <Button w={"full"} colorScheme='blue' size={"sm"} fontSize={14} isLoading={loading}
-        onClick={() => signup(inputs)}>
+      <Button w={"full"} colorScheme='blue' size={"sm"} fontSize={14} isLoading={loading} onClick={() => signup(inputs)}>
         Sign Up
       </Button>
 
