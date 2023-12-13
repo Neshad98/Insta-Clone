@@ -8,7 +8,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage'
 import useAuthStore from './store/authStore'
 
 function App() {
-  const authUser = useAuthStore(state => state.user);
+  const authUser = useAuthStore((state) => state.user);
 
   return (
     <PageLayout>
