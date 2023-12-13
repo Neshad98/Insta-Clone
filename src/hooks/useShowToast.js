@@ -5,6 +5,8 @@ import { useCallback } from 'react';
 
 const useShowToast = () => {
   const toast = useToast();
+
+  // usecallback is used to prevent infinite loop by catching the function
   const showToast = useCallback((title, description, status) => {
     toast({
       title: title,
