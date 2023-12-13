@@ -9,6 +9,7 @@ const PageLayout = ({ children }) => {
   const { pathname } = useLocation();
   const { user, loading, error } = useAuthState(auth);
   const canRenderSidebar = pathname !== '/auth' && user;
+  const canRenderNavbar = !user && !loading && pathname !== "/auth";
   return (
     <Flex>
       {/* sidebar on the left */}
@@ -17,6 +18,8 @@ const PageLayout = ({ children }) => {
           <Sidebar></Sidebar>
         </Box>
       ) : null}
+      {/* navbar */}
+      {canRenderNavbar ? <Navbar /> : null}
       {/* page content on the right  */}
       <Box flex={1} w={{ base: "calc(100%-70px)", md: "calc(100%-240px)" }}>
         {children}
