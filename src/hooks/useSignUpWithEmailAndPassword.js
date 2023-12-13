@@ -5,7 +5,7 @@ import useShowToast from './useShowToast';
 
 const useSignUpWithEmailAndPassword = () => {
   const [
-    createUserWithEmailAndPassword,
+    createUserWithEmailAndPassword, ,
     loading,
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
@@ -40,11 +40,8 @@ const useSignUpWithEmailAndPassword = () => {
       }
     }
     catch (error) {
-      if (error.message === "auth/email-already-in-use") {
-        showToast("Error", "This email is already in use. Please use a different email", "error");
-      } else {
-        showToast("Error", error.message, "error")
-      }
+
+      showToast("Error", "This email is already in use. Please use a different email", "error");
 
     }
   };
