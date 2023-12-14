@@ -8,6 +8,8 @@ import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from './firebase/firebase'
 
+// just making a comment for git push xD 
+
 function App() {
   const [authUser] = useAuthState(auth);
 
