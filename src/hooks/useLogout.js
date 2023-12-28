@@ -12,6 +12,7 @@ const useLogout = () => {
     try {
       await signOut();
       localStorage.removeItem('user-info')
+      console.log("logged out")
       logoutUser();
     } catch (error) {
       showToast('Error', error.message, 'error')

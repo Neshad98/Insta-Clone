@@ -12,6 +12,7 @@ const useSignUpWithEmailAndPassword = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
   const showToast = useShowToast();
   const loginUser = useAuthStore(state => state.login);
+  // const logoutUser = useAuthStore(state => state.logout);
 
 
   const signup = async (inputs) => {
