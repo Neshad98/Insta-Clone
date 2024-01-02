@@ -10,6 +10,7 @@ import useAuthStore from './store/authStore'
 // just making a comment for git push xD 
 
 function App() {
+  //state from zustand
   const authUser = useAuthStore(state => state.user);
   return (
     <PageLayout>
