@@ -5,13 +5,15 @@ import HomePage from './pages/HomePage/HomePage'
 import AuthPage from './pages/AuthPage/AuthPage'
 import PageLayout from './Layouts/PageLayout/PageLayout'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
-import useAuthStore from './store/authStore'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from './firebase/firebase'
 
 // just making a comment for git push xD 
 
 function App() {
   //state from zustand
-  const authUser = useAuthStore(state => state.user);
+  // const authUser = useAuthStore(state => state.user);
+  const [authUser] = useAuthState(auth);
   return (
     <PageLayout>
       <Routes>
