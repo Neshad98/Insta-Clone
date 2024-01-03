@@ -25,7 +25,7 @@ const SuggestedHeader = () => {
         } cursor={"pointer"} >
         Log out
       </Button>
-    </Flex>
+    </Flex >
   );
 };
 
