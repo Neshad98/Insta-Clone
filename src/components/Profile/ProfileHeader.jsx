@@ -1,6 +1,7 @@
-import { Avatar, AvatarGroup, Button, Flex, Text, VStack } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Button, Flex, Text, VStack, useDisclosure } from "@chakra-ui/react";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
+import EditProfile from "./EditProfile";
 
 
 
@@ -9,6 +10,7 @@ const ProfileHeader = () => {
   const authUser = useAuthStore(state => state.user);
   const visitingOwnProfileAndAuth = authUser && authUser.username === userProfile.username;
   const visitingAnotherProfileAndAuth = authUser && authUser.username !== userProfile.username;
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
 
   return (
@@ -22,7 +24,7 @@ const ProfileHeader = () => {
           <Text fontSize={{ base: "sm", md: "lg" }}>{userProfile.username} </Text>
 
           {visitingOwnProfileAndAuth && (<Flex gap={4} alignItems={"center"} justifyContent={"center"}>
-            <Button bg={"white"} color={"black"} _hover={{ bg: "whiteAlpha.800" }} size={{ base: "xs", md: "sm" }}>
+            <Button bg={"white"} color={"black"} _hover={{ bg: "whiteAlpha.800" }} size={{ base: "xs", md: "sm" }} onClick={onOpen}>
               Edit Profile
             </Button>
           </Flex>)}
@@ -62,6 +64,7 @@ const ProfileHeader = () => {
         </Flex>
         <Text fontSize={"sm"}>{userProfile.bio}</Text>
       </VStack>
+      {isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
     </Flex>
   );
 };
