@@ -1,8 +1,9 @@
 // COPY AND PASTE AS THE STARTER CODE FOR THE SEARCH COMPONENT
-import { Box, Flex, Tooltip } from "@chakra-ui/react";
+import { Box, Flex, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { SearchLogo } from "../../assets/constants";
 
 const Search = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Tooltip
