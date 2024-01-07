@@ -1,9 +1,14 @@
 import { Box, Flex, Link, Text, VStack } from "@chakra-ui/react";
 import SuggestedHeader from "./SuggestedHeader";
-import SuggestedUser from "./SuggestedUser";
+import SuggestedUsers from "./suggestedUser";
+import useGetSuggestedUsers from "../../hooks/useGetSuggestedUsers";
+import SuggestedUser from "./suggestedUser";
 
 
 const SuggestedUsers = () => {
+  const { isLoading, suggestedUsers } = useGetSuggestedUsers();
+  if (isLoading) return null;
+
   return (
     <VStack py={8} px={6} gap={4}>
       <SuggestedHeader />
@@ -15,10 +20,9 @@ const SuggestedUsers = () => {
           See All
         </Text>
       </Flex>
-      <SuggestedUser name="Michale Jackson" followers={750} avatar="" />
-      <SuggestedUser name="Jhonny Depp" followers={690} avatar="" />
-      <SuggestedUser name="Ben Afflec" followers={820} avatar="" />
-      <SuggestedUser name="Henry Cavill" followers={1400} avatar="" />
+      {suggestedUsers.map(user => (
+        <SuggestedUser user={user} key={user.id} />
+      ))}
 
 
       <Box fontSize={12} color={"gray.500"} mt={5} alignSelf={"start"}>
