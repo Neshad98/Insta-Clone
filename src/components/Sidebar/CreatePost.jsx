@@ -60,7 +60,7 @@ const CreatePost = () => {
                   top={2}
                   right={2}
                   onClick={() => {
-                    setSelectedFile("")
+                    setSelectedFile(null)
                   }}
 
                 />
