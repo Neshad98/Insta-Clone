@@ -38,7 +38,7 @@ const useGetSuggestedUsers = () => {
       }
     }
 
-    if (authUser) getSuggestedUsers()
+    if (authUser) getSuggestedUsers();
   }, [authUser, showToast])
 
   return { isLoading, suggestedUsers }
