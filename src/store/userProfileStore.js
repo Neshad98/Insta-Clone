@@ -5,8 +5,8 @@ const useUserProfileStore = create((set) => ({
   setUserProfile: (userProfile) => set({ userProfile }),
   //this is used to update the number of posts in the profile page
   addPost: (post) => set(state => ({
-    userProfile: { ...state.userProfile, posts: [post.id, ...state.userProfile.posts] }
-  }))
+    userProfile: { ...state.userProfile, posts: [post.id, ...state.userProfile.posts] },
+  })),
 }));
 
 export default useUserProfileStore;
