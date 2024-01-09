@@ -6,12 +6,33 @@ import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
+import useShowToast from "../../hooks/useShowToast";
+import { useState } from "react";
+import { deleteObject, ref } from "firebase/storage";
+import { firestore, storage } from "../../firebase/firebase";
+import { deleteDoc, doc } from "firebase/firestore";
 
 
 const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useUserProfileStore((state) => state.userProfile);
   const authUser = useAuthStore((state) => state.user);
+  const showToast = useShowToast();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const handleDeletePost = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    try {
+      const imageRef = ref(storage, `posts/${post.id}`);
+      await deleteObject(imageRef);
+      const userRef = doc(firestore, "users", authUser.uid);
+      await deleteDoc(doc(firestore, "posts", post.id));
+    } catch (error) {
+      showToast("Error", error.message, 'error')
+    } finally {
+
+    }
+  }
+
   return (
     <>
       <GridItem cursor={"pointer"} borderRadius={4} overflow={"hidden"} border={"1px solid"} borderColor={"whiteAlpha.300"} position={"relative"} aspectRatio={1 / 1} onClick={onOpen}>
@@ -59,7 +80,8 @@ const ProfilePost = ({ post }) => {
                   </Flex>
 
                   {authUser?.uid === userProfile.uid && (
-                    <Button size={"sm"} bg={"transparent"} _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}>
+                    <Button size={"sm"} bg={"transparent"} _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}
+                      onClick={handleDeletePost}>
                       <MdDelete size={20} cursor={"pointer"} />
                     </Button>
                   )}
@@ -91,72 +113,7 @@ const ProfilePost = ({ post }) => {
                     profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
                     text={"Be fckn simple no matter what"}
                   />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
+
 
                 </VStack>
                 <Divider my={4} bg={"gray.800"}></Divider>
