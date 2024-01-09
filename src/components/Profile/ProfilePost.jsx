@@ -100,31 +100,9 @@ const ProfilePost = ({ post }) => {
                 </Flex>
                 <Divider my={4} bg={"gray.400"}></Divider>
                 <VStack w={"full"} alignItems={"start"} maxH={"350px"} overflowY={"auto"}>
-                  <Comment
-                    createdAt="1d ago"
-                    username="Neshad Rahman"
-                    profilePic="/profilepic.png"
-                    text={"Dummy images from unsplash"}
-                  />
-                  <Comment
-                    createdAt="4h ago"
-                    username="Chad Woolosky"
-                    profilePic="https://ibb.co/w7WT5gV"
-                    text={"Be a fcknnn Chad MF"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-                  <Comment
-                    createdAt="12h ago"
-                    username="Keanu Reeves"
-                    profilePic="https://i.ibb.co/LnPg9NT/keanu.webp"
-                    text={"Be fckn simple no matter what"}
-                  />
-
+                  {post.comments.map(comment => (
+                    <Comment key={comment.id} comment={comment} />
+                  ))}
 
                 </VStack>
                 <Divider my={4} bg={"gray.800"}></Divider>

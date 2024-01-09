@@ -33,6 +33,7 @@ const usePostComment = () => {
       setIsCommenting(false)
     }
   }
+  return { isCommenting, handlePostComment }
 
 }
 
