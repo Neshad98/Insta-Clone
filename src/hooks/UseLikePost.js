@@ -5,11 +5,12 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { firestore } from "../firebase/firebase";
 
 
-const UseLikePost = (post) => {
+const useLikePost = (post) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const authUser = useAuthStore(state => state.user);
-  const [likes, setLikes] = useState(post.likes.length);
-  const [isLiked, setIsLiked] = useState(post.likes.includes(authUser?.uid));
+  const [likes, setLikes] = useState(post?.likes?.length);
+  const [isLiked, setIsLiked] = useState(authUser && post?.likes.includes(authUser?.uid) || false);
+  console.log("likes", likes);
   const showToast = useShowToast();
 
   const handleLikePost = async () => {
@@ -18,7 +19,7 @@ const UseLikePost = (post) => {
     setIsUpdating(true)
 
     try {
-      const postRef = doc(firestore, 'posts', post.id)
+      const postRef = doc(firestore, "posts", post.id)
       await updateDoc(postRef, {
         likes: isLiked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid)
       })
@@ -31,7 +32,7 @@ const UseLikePost = (post) => {
       setIsUpdating(false);
     }
   }
-  return (isLiked, likes, handleLikePost, isUpdating);
+  return { isLiked, likes, handleLikePost, isUpdating };
 }
 
-export default UseLikePost
+export default useLikePost

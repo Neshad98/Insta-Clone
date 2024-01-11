@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
-import UseLikePost from "../../hooks/UseLikePost";
+import useLikePost from "../../hooks/useLikePost"
+
 
 
 const PostFooter = ({ post, username, isProfilePage }) => {
@@ -11,7 +12,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
   const [comment, setComment] = useState("");
   const authUser = useAuthStore(state => state.user);
   const commentRef = useRef(null);
-  const { handleLikePost, isLiked, likes } = UseLikePost(post);
+  const { handleLikePost, isLiked, likes, isUpdating } = useLikePost(post);
 
   const handleSubmitComment = async () => {
     await handlePostComment(post.id, comment);
