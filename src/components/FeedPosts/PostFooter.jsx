@@ -4,17 +4,25 @@ import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constan
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
 import useLikePost from "../../hooks/useLikePost"
+import useShowToast from "../../hooks/useShowToast";
 
 
 
 const PostFooter = ({ post, username, isProfilePage }) => {
   const { isCommenting, handlePostComment } = usePostComment();
   const [comment, setComment] = useState("");
+  const [isCommentEmpty, setIsCommentEmpty] = useState(false);
   const authUser = useAuthStore(state => state.user);
   const commentRef = useRef(null);
-  const { handleLikePost, isLiked, likes, isUpdating } = useLikePost(post);
+  const { handleLikePost, isLiked, likes } = useLikePost(post);
+  const showToast = useShowToast();
 
   const handleSubmitComment = async () => {
+    if (comment.trim() === "") {
+      setIsCommentEmpty(true);
+      showToast("Error", "Cannot comment blank comment", 'error');
+    }
+    setIsCommentEmpty(false);
     await handlePostComment(post.id, comment);
     setComment('');
   }
@@ -55,9 +63,11 @@ const PostFooter = ({ post, username, isProfilePage }) => {
             <InputRightElement>
               <Button fontSize={14} color={"blue.500"} fontWeight={600} cursor={"pointer"} _hover={{ color: "white" }} bg={'transparent'}
                 onClick={handleSubmitComment} isLoading={isCommenting}
+                disabled={!comment.trim()}
               >Post</Button>
             </InputRightElement>
           </InputGroup>
+          {isCommentEmpty && <Text color="red">Comment cannot be empty</Text>}
         </Flex>
       )}
     </Box>
@@ -65,3 +75,14 @@ const PostFooter = ({ post, username, isProfilePage }) => {
 };
 
 export default PostFooter;
+
+
+
+
+
+
+
+
+
+
+

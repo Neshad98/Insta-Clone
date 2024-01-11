@@ -12,7 +12,7 @@ const usePostComment = () => {
   const addComment = usePostStore(state => state.addComment)
 
   const handlePostComment = async (postId, comment) => {
-    if (isCommenting) return
+    if (isCommenting || !comment.trim()) return;
     if (!authUser) return showToast("Error", "You must be logged in to comment", "error");
     setIsCommenting(true);
     const newComment = {
@@ -22,6 +22,7 @@ const usePostComment = () => {
       postId
     }
     try {
+
       await updateDoc(doc(firestore, "posts", postId), {
         comments: arrayUnion(newComment)
       })
@@ -33,8 +34,8 @@ const usePostComment = () => {
       setIsCommenting(false)
     }
   }
-  return { isCommenting, handlePostComment }
+  return { isCommenting, handlePostComment };
 
 }
 
-export default usePostComment
+export default usePostComment;

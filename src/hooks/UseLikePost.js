@@ -9,8 +9,9 @@ const useLikePost = (post) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const authUser = useAuthStore(state => state.user);
   const [likes, setLikes] = useState(post?.likes?.length);
-  const [isLiked, setIsLiked] = useState(authUser && post?.likes.includes(authUser?.uid) || false);
-  console.log("likes", likes);
+  //fckn annoying error fixed by  (authUser && post?.likes.includes(authUser?.uid) || false);
+  const [isLiked, setIsLiked] = useState(authUser && post?.likes.includes(authUser?.uid));
+  // console.log("likes", likes);
   const showToast = useShowToast();
 
   const handleLikePost = async () => {
