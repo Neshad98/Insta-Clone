@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text, useDisclosure } from "@chakra-ui/react"
 import { useRef, useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants";
 import usePostComment from "../../hooks/usePostComment";
@@ -6,6 +6,7 @@ import useAuthStore from "../../store/authStore";
 import useShowToast from "../../hooks/useShowToast";
 import useLikePost from "../../hooks/UseLikePost";
 import { timeAgo } from "../../utills/timeAgo";
+import CommentsModal from "../Modals/CommentsModal";
 
 
 
@@ -17,6 +18,7 @@ const PostFooter = ({ post, isProfilePage, creatorProfile }) => {
   const commentRef = useRef(null);
   const { handleLikePost, isLiked, likes } = useLikePost(post);
   const showToast = useShowToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmitComment = async () => {
     if (comment.trim() === "") {
@@ -58,10 +60,11 @@ const PostFooter = ({ post, isProfilePage, creatorProfile }) => {
             </Text>
           </Text>
           {post.comments.length > 0 && (
-            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"} onClick={onOpen}>
               View all {post.comments.length} comments
             </Text>
           )}
+          {isOpen ? <CommentsModal isOpen={isOpen} onClose={onClose} post={post} /> : null}
         </>
       )}
       {authUser && (
