@@ -3,12 +3,13 @@ import { useRef, useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
-import useLikePost from "../../hooks/useLikePost"
 import useShowToast from "../../hooks/useShowToast";
+import useLikePost from "../../hooks/UseLikePost";
+import { timeAgo } from "../../utills/timeAgo";
 
 
 
-const PostFooter = ({ post, username, isProfilePage }) => {
+const PostFooter = ({ post, isProfilePage, creatorProfile }) => {
   const { isCommenting, handlePostComment } = usePostComment();
   const [comment, setComment] = useState("");
   const [isCommentEmpty, setIsCommentEmpty] = useState(false);
@@ -43,17 +44,24 @@ const PostFooter = ({ post, username, isProfilePage }) => {
       <Text fontWeight={600} fontSize={"sm"}>
         {likes} likes
       </Text>
+      {isProfilePage && (
+        <Text fontSize={"12"} color={"gray"}>
+          Posted {timeAgo(post.createdAt)}
+        </Text>
+      )}
       {!isProfilePage && (
         <>
           <Text fontSize={"sm"} fontWeight={700}>
-            {username}{" "}
+            {creatorProfile?.username}{" "}
             <Text as="span" fontWeight={400}>
-              Feeling good
+              {post.caption}
             </Text>
           </Text>
-          <Text fontSize={"sm"} color={"gray"}>
-            View all 1,000 comments
-          </Text>
+          {post.comments.length > 0 && (
+            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+              View all {post.comments.length} comments
+            </Text>
+          )}
         </>
       )}
       {authUser && (
